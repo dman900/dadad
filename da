@@ -1,10 +1,27 @@
-deb http://
-http.kali.org/kali kali main non-free contrib
+Install MSF_DATABASE_CONFIG for Armitage in backbox 5 linux.
 
-deb http://
-security.kali.org/kali-security kali/updates main contrib non-free
+#make sure you have metasploit installed in backbox.
 
-deb-src http://
-http.kali.org/kali kali main non-free contrib
-deb-src http://
-security.kali.org/kali-security kali/updates main contrib
+1- Download armitage manually from website.You can find it by googling it.
+
+2- Extract the package.
+
+3- Move the extracted package to /opt/
+	=> use mv command , example - sudo mv /home/'root'/Downloads/armitage/ /opt/
+
+4- Run the following command
+	-> sudo ln -s /opt/armitage/armitage /usr/local/bin/armitage
+	-> sudo ln -s /opt/armitage/teamserver /usr/local/bin/teamserver
+	-> sudo sh -c "echo java -jar /opt/armitage/armitage.jar \$\* > /opt/armitage/armitage"
+	-> sudo perl -pi -e 's/armitage.jar/\/opt\/armitage\/armitage.jar/g' /opt/armitage/teamserver
+
+5- Edit files at /etc/environment, paste the following at any line
+	=> export MSF_DATABASE_CONFIG="/opt/metasploit-framework/config/database.yml"
+
+6- Edit files at /home/'user'/.bashrc, paste the following at any line
+	=> MSF_DATABASE_CONFIG=/opt/metasploit-framework/config/database.yml
+
+7- Run command.
+	-> msfdb init
+
+8- Run armitage. Done.
